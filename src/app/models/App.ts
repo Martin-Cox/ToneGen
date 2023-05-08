@@ -1,24 +1,15 @@
 import { action, computed, makeObservable, observable } from "mobx";
+import { ToneGenerator } from "../../audio/models/ToneGenerator";
+
 
 export class App {
-    @observable
-    private _time: Date;
+    private readonly _toneGenerator: ToneGenerator;
 
     public constructor() {
-        makeObservable(this);
-
-        this._updateTime();
-
-        setInterval(() => this._updateTime(), 1000);
+        this._toneGenerator = new ToneGenerator();
     }
 
-    @computed
-    public get time(): Date {
-        return this._time;
-    }
-
-    @action
-    private _updateTime(): void {
-        this._time = new Date();
+    public get toneGenerator(): ToneGenerator {
+        return this._toneGenerator;
     }
 }

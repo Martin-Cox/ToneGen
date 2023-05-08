@@ -1,18 +1,17 @@
-import { computed, makeObservable } from "mobx";
-import { App } from "../components/App";
-
+import { ToneGeneratorViewModel } from "../../audio/viewmodels/ToneGeneratorViewModel";
+import { App } from "../models/App";
 
 export class AppViewModel {
     private readonly _app: App;
 
-    public constructor(app: App) {
-        makeObservable(this);
+    private readonly _toneGeneratorViewModel: ToneGeneratorViewModel;
 
+    public constructor(app: App) {
         this._app = app;
+        this._toneGeneratorViewModel = new ToneGeneratorViewModel(app.toneGenerator);
     }
 
-    @computed
-    public get time(): string {
-        return `The time is ${this._app.time.toDateString()} ${this._app.time.toTimeString()}`;
+    public get toneGeneratorViewModel(): ToneGeneratorViewModel {
+        return this._toneGeneratorViewModel;
     }
 }

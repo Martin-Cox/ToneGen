@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 
 import { App as AppModel } from '../models/App';
 import { AppViewModel } from "../viewmodels/AppViewModel";
+import { ToneGenerator } from '../../audio/components/ToneGenerator';
 
 type AppProps = {
     model: AppViewModel
@@ -11,7 +12,10 @@ type AppProps = {
 
 const App: React.FunctionComponent<AppProps> = observer(({ model }) => {
     return (
-        <h1>{model.time}</h1>
+        <>
+            <h1>Simple Tone Generation Test</h1>
+            <ToneGenerator model={model.toneGeneratorViewModel} />
+        </>
     )
 });
 
