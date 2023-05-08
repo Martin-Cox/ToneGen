@@ -1,25 +1,24 @@
-import { action, computed, makeObservable, observable } from "mobx";
 import { ToneGenerator } from "../../audio/models/ToneGenerator";
 import { ScriptExecutor } from "../..//script/models/ScriptExecutor";
-import { LogScriptAction } from "../../script/models/LogScriptAction";
+import { StartScriptAction } from "../../script/models/StartScriptAction";
+import { WaitScriptAction } from "../../script/models/WaitScriptAction";
+import { SetFrequencyScriptAction } from "../../script/models/SetFrequencyScriptAction";
+import { NOTE_FREQUENCIES } from "../../Constants";
+import { StopScriptAction } from "../../script/models/StopScriptAction";
 
 
 export class App {
-    private readonly _toneGenerator: ToneGenerator;
-
     public constructor() {
-        this._toneGenerator = new ToneGenerator();
-
+        new ToneGenerator();
 
         // For demonstration purposes
         const scriptExecutor = new ScriptExecutor();
-        scriptExecutor.addAction(new LogScriptAction("LOG testing 1", "testing 1"));
-        scriptExecutor.addAction(new LogScriptAction("LOG testing 2", "testing 2"));
-        scriptExecutor.addAction(new LogScriptAction("LOG testing 3", "testing 3"));
+        scriptExecutor.addAction(new SetFrequencyScriptAction("SET FREQUENCY C4", NOTE_FREQUENCIES["C4"]));
+        scriptExecutor.addAction(new StartScriptAction("START"));
+        scriptExecutor.addAction(new WaitScriptAction("WAIT 5000", 5000));
+        scriptExecutor.addAction(new SetFrequencyScriptAction("SET FREQUENCY A4", NOTE_FREQUENCIES["A4"]));
+        scriptExecutor.addAction(new WaitScriptAction("WAIT 5000", 5000));
+        scriptExecutor.addAction(new StopScriptAction("STOP"));
         scriptExecutor.executeScript();
-    }
-
-    public get toneGenerator(): ToneGenerator {
-        return this._toneGenerator;
     }
 }

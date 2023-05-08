@@ -1,8 +1,8 @@
 # A simple script that switches between 2 notes
-START #Start
 SET TYPE SINE #Set oscillator type
+SET FREQUENCY 261.63 #Set Frequency to C4 261.63Hz
+START #Start
+WAIT 5000 #Wait for 5 seconds
 SET FREQUENCY 440 #Set Frequency to A4 440Hz
 WAIT 5000 #Wait for 5 seconds
-SET FREQUENCY 261.63 #Set Frequency to C4 261.63Hz
-WAIT 5000 #Wait for 5 seconds
-END #End script (will never be hit)
+END #End script
