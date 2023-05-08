@@ -1,17 +1,17 @@
-// import { ToneGeneratorViewModel } from "../../audio/viewmodels/ToneGeneratorViewModel";
 import { App } from "../models/App";
+import { ControlPanelViewModel } from "./ControlPanelViewModel";
 
 export class AppViewModel {
     private readonly _app: App;
 
-   // private readonly _toneGeneratorViewModel: ToneGeneratorViewModel;
+   private readonly _controlPanelViewModel: ControlPanelViewModel;
 
     public constructor(app: App) {
         this._app = app;
-        //this._toneGeneratorViewModel = new ToneGeneratorViewModel(app.toneGenerator);
+        this._controlPanelViewModel = new ControlPanelViewModel(app.scriptExecutor);
     }
 
-    // public get toneGeneratorViewModel(): ToneGeneratorViewModel {
-    //     return this._toneGeneratorViewModel;
-    // }
+    public get controlPanelViewModel(): ControlPanelViewModel {
+        return this._controlPanelViewModel;
+    }
 }
