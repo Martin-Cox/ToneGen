@@ -1,0 +1,10 @@
+# A simple script that loops between 2 notes endlessly
+START #Start
+SET TYPE SINE #Set oscillator type
+BLOCK LOOP_START #Declare start of block named LOOP_START
+SET FREQUENCY 440 #Set Frequency to A4 440Hz
+WAIT 5000 #Wait for 5 seconds
+SET FREQUENCY 261.63 #Set Frequency to C4 261.63Hz
+WAIT 5000 #Wait for 5 seconds
+GOTO LOOP_START #Go to the start of the LOOP_START block
+END #End script (will never be hit)

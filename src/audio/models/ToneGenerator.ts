@@ -1,6 +1,7 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { NOTE_FREQUENCIES } from "../../Constants";
 
+
 export class ToneGenerator {
     private readonly _audioContext: AudioContext;
 
