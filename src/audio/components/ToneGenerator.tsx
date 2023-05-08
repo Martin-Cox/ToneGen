@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from "mobx-react";
 
 import { ToneGeneratorViewModel } from '../viewmodels/ToneGeneratorViewModel';
+import { NOTE_FREQUENCIES } from '../../Constants';
 
 type ToneGeneratorProps = {
     model: ToneGeneratorViewModel
@@ -17,11 +18,13 @@ export const ToneGenerator: React.FunctionComponent<ToneGeneratorProps> = observ
             <br/>
             <label htmlFor="frequency">Frequency:</label>
             <select name="frequency" id="frequency" value={model.frequency} onChange={(change) => model.setFrequency(parseFloat(change.target.value))}>
-                <option value="233.1">233.1 (Bb3)</option>
-                <option value="246.9">246.9 (B3)</option>
-                <option value="261.6">261.6 (C4)</option>
-                <option value="277.2">277.2 (C#4)</option>
-                <option value="293.7">293.7 (D4)</option>
+                {Object.keys(NOTE_FREQUENCIES).map((note) => {
+                    const frequency = NOTE_FREQUENCIES[note];
+
+                    return (
+                        <option value={frequency.toString()}>{note} [{frequency}]</option>
+                    )
+                })}
             </select>
         </div>
     );
