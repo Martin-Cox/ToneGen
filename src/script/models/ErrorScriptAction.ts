@@ -6,6 +6,6 @@ export class ErrorScriptAction extends ScriptAction {
     }
 
     protected async _performAction(): Promise<void> {
-        // An error scritp action does not do anything.
+        // An error script action does not do anything.
     }
 }

@@ -4,10 +4,13 @@ import { ScriptAction } from "./ScriptAction";
 export class SetFrequencyScriptAction extends ScriptAction {
     private readonly _frequency: number;
 
-    public constructor(toneGenerator: ToneGenerator, command: string, frequency: number) {
-        super(toneGenerator, command);
+    private readonly _toneGenerator: ToneGenerator;
+
+    public constructor(command: string, frequency: number, toneGenerator: ToneGenerator) {
+        super(command);
 
         this._frequency = frequency;
+        this._toneGenerator = toneGenerator;
     }
 
     protected async _performAction(): Promise<void> {

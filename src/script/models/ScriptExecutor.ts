@@ -72,4 +72,23 @@ export class ScriptExecutor {
     public addAction(scriptAction: ScriptAction): void {
         this._actions.push(scriptAction);
     }
+
+    @action
+    public goToAction(action: ScriptAction | string): void {
+        let targetAction: ScriptAction;
+
+        if (typeof action === "string") {
+            targetAction === this.actions.find((possibleAction) => possibleAction.id === action);
+        } else {
+            targetAction = action
+        }
+
+        if (!targetAction) {
+            throw new Error("Error trying to go to action");
+        }
+
+        const targetActionIndex = this.actions.indexOf(targetAction);
+
+        this._currentActionIndex = targetActionIndex;
+    }
 }

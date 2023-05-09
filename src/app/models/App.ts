@@ -15,19 +15,32 @@ SET FREQUENCY A4
 WAIT 5000
 STOP`;
 
+const testLoopScript = `SET FREQUENCY C4
+START
+BLOCK LOOP_START
+SET FREQUENCY C4
+WAIT 5000
+SET FREQUENCY A4
+WAIT 5000
+GOTO LOOP_START
+STOP`;
+
+//TODO: Add IF THEN ELSE command
 
 export class App {
     private readonly _toneGenerator: ToneGenerator;
 
     private readonly _scriptExecutor: ScriptExecutor;
 
+    private readonly _scriptParser: ScriptParser;
+
     public constructor() {
-        this._toneGenerator = new ToneGenerator();
-
-        const scriptParser = new ScriptParser(this._toneGenerator);
-        const actions = scriptParser.parse(testScript);
-
+        this._toneGenerator = new ToneGenerator();        
         this._scriptExecutor = new ScriptExecutor();
+        this._scriptParser = new ScriptParser(this._toneGenerator, this._scriptExecutor);
+
+        const actions = this._scriptParser.parse(testLoopScript);
+
         this._scriptExecutor.setActions(actions);
     }
 

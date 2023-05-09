@@ -1,15 +1,11 @@
 import { nanoid } from "nanoid";
-import { ToneGenerator } from "../../audio/models/ToneGenerator";
 
 export abstract class ScriptAction {
-    protected readonly _toneGenerator: ToneGenerator;
-
     private readonly _command: string;
 
     private readonly _id: string;
 
-    public constructor(toneGenerator: ToneGenerator, command: string) {
-        this._toneGenerator = toneGenerator;
+    public constructor(command: string) {
         this._command = command;
         this._id = nanoid(8);
     }

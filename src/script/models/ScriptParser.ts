@@ -6,8 +6,11 @@
 
 import { parseFrequency } from "../../Utils";
 import { ToneGenerator } from "../../audio/models/ToneGenerator";
+import { BlockScriptAction } from "./BlockScriptAction";
 import { ErrorScriptAction } from "./ErrorScriptAction";
+import { GotoScriptAction } from "./GotoScriptAction";
 import { ScriptAction } from "./ScriptAction";
+import { ScriptExecutor } from "./ScriptExecutor";
 import { SetFrequencyScriptAction } from "./SetFrequencyScriptAction";
 import { StartScriptAction } from "./StartScriptAction";
 import { StopScriptAction } from "./StopScriptAction";
@@ -35,10 +38,17 @@ export class ScriptParser {
 
     private static REGEX_SET_FREQUENCY = /^SET FREQUENCY (.+)$/;
 
+    private static REGEX_BLOCK = /^BLOCK (\w+)$/;
+
+    private static REGEX_GOTO = /^GOTO (\w+)$/;
+
     private readonly _toneGenerator: ToneGenerator;
 
-    public constructor(toneGenerator: ToneGenerator) {
+    private readonly _scriptExecutor: ScriptExecutor;
+
+    public constructor(toneGenerator: ToneGenerator, scriptExecutor: ScriptExecutor) {
         this._toneGenerator = toneGenerator;
+        this._scriptExecutor = scriptExecutor;
     }
 
     public parse(script: string): ScriptAction[] {
@@ -64,7 +74,9 @@ export class ScriptParser {
             ScriptParser.REGEX_START,
             ScriptParser.REGEX_STOP,
             ScriptParser.REGEX_WAIT,
-            ScriptParser.REGEX_SET_FREQUENCY
+            ScriptParser.REGEX_SET_FREQUENCY,
+            ScriptParser.REGEX_BLOCK,
+            ScriptParser.REGEX_GOTO
         ];
 
         let matchingRegex: RegExp;
@@ -80,19 +92,25 @@ export class ScriptParser {
 
         switch (matchingRegex) {
             case ScriptParser.REGEX_START:
-                scriptActions.push(new StartScriptAction(this._toneGenerator, line));
+                scriptActions.push(new StartScriptAction(line, this._toneGenerator));
                 break;
             case ScriptParser.REGEX_STOP:
-                scriptActions.push(new StopScriptAction(this._toneGenerator, line));
+                scriptActions.push(new StopScriptAction(line, this._toneGenerator));
                 break;
             case ScriptParser.REGEX_WAIT:
-                scriptActions.push(new WaitScriptAction(this._toneGenerator, line, parseInt(matches[1])));
+                scriptActions.push(new WaitScriptAction(line, parseInt(matches[1])));
                 break;
             case ScriptParser.REGEX_SET_FREQUENCY:
-                scriptActions.push(new SetFrequencyScriptAction(this._toneGenerator, line, parseFrequency(matches[1])));
+                scriptActions.push(new SetFrequencyScriptAction(line, parseFrequency(matches[1]), this._toneGenerator));
+                break;
+            case ScriptParser.REGEX_BLOCK:
+                scriptActions.push(new BlockScriptAction(line, matches[1]));
+                break;
+            case ScriptParser.REGEX_GOTO:
+                scriptActions.push(new GotoScriptAction(line, matches[1], this._scriptExecutor));
                 break;
             default:
-                scriptActions.push(new ErrorScriptAction(this._toneGenerator, line));
+                scriptActions.push(new ErrorScriptAction(line));
                 break;
         }
     }
