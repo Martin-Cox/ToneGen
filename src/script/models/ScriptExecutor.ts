@@ -58,10 +58,17 @@ export class ScriptExecutor {
         console.info("End executing script");
     }
 
+    @action
     public clearActions(): void {
         this._actions = [];
     }
 
+    @action
+    public setActions(actions: ScriptAction[]): void {
+        this._actions = actions;
+    }
+
+    @action
     public addAction(scriptAction: ScriptAction): void {
         this._actions.push(scriptAction);
     }

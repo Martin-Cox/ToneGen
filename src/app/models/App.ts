@@ -5,6 +5,15 @@ import { WaitScriptAction } from "../../script/models/WaitScriptAction";
 import { SetFrequencyScriptAction } from "../../script/models/SetFrequencyScriptAction";
 import { NOTE_FREQUENCIES } from "../../Constants";
 import { StopScriptAction } from "../../script/models/StopScriptAction";
+import { ScriptParser } from "../../script/models/ScriptParser";
+
+
+const testScript = `SET FREQUENCY C4
+START
+WAIT 5000
+SET FREQUENCY A4
+WAIT 5000
+STOP`;
 
 
 export class App {
@@ -15,14 +24,11 @@ export class App {
     public constructor() {
         this._toneGenerator = new ToneGenerator();
 
-        // For demonstration purposes
+        const scriptParser = new ScriptParser(this._toneGenerator);
+        const actions = scriptParser.parse(testScript);
+
         this._scriptExecutor = new ScriptExecutor();
-        this._scriptExecutor.addAction(new SetFrequencyScriptAction(this._toneGenerator, "SET FREQUENCY C4", NOTE_FREQUENCIES["C4"]));
-        this._scriptExecutor.addAction(new StartScriptAction(this._toneGenerator, "START"));
-        this._scriptExecutor.addAction(new WaitScriptAction(this._toneGenerator, "WAIT 5000", 5000));
-        this._scriptExecutor.addAction(new SetFrequencyScriptAction(this._toneGenerator, "SET FREQUENCY A4", NOTE_FREQUENCIES["A4"]));
-        this._scriptExecutor.addAction(new WaitScriptAction(this._toneGenerator, "WAIT 5000", 5000));
-        this._scriptExecutor.addAction(new StopScriptAction(this._toneGenerator, "STOP"));
+        this._scriptExecutor.setActions(actions);
     }
 
     public get scriptExecutor(): ScriptExecutor {
