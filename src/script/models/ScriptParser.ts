@@ -12,6 +12,7 @@ import { GotoScriptAction } from "./GotoScriptAction";
 import { ScriptAction } from "./ScriptAction";
 import { ScriptExecutor } from "./ScriptExecutor";
 import { SetFrequencyScriptAction } from "./SetFrequencyScriptAction";
+import { SetVariableScriptAction } from "./SetVariableScriptAction";
 import { StartScriptAction } from "./StartScriptAction";
 import { StopScriptAction } from "./StopScriptAction";
 import { WaitScriptAction } from "./WaitScriptAction";
@@ -41,6 +42,8 @@ export class ScriptParser {
     private static REGEX_BLOCK = /^BLOCK (\w+)$/;
 
     private static REGEX_GOTO = /^GOTO (\w+)$/;
+
+    private static REGEX_SET_VARIABLE = /^SET VARIABLE (.+) = (.+)$/;
 
     private readonly _toneGenerator: ToneGenerator;
 
@@ -76,7 +79,8 @@ export class ScriptParser {
             ScriptParser.REGEX_WAIT,
             ScriptParser.REGEX_SET_FREQUENCY,
             ScriptParser.REGEX_BLOCK,
-            ScriptParser.REGEX_GOTO
+            ScriptParser.REGEX_GOTO,
+            ScriptParser.REGEX_SET_VARIABLE
         ];
 
         let matchingRegex: RegExp;
@@ -108,6 +112,9 @@ export class ScriptParser {
                 break;
             case ScriptParser.REGEX_GOTO:
                 scriptActions.push(new GotoScriptAction(line, matches[1], this._scriptExecutor));
+                break;
+            case ScriptParser.REGEX_SET_VARIABLE:
+                scriptActions.push(new SetVariableScriptAction(line, matches[1], matches[2], this._scriptExecutor));
                 break;
             default:
                 scriptActions.push(new ErrorScriptAction(line));

@@ -25,7 +25,19 @@ WAIT 5000
 GOTO LOOP_START
 STOP`;
 
-//TODO: Add IF THEN ELSE command
+const testLoopWithVariablesScript = `SET FREQUENCY C4
+SET VARIABLE COUNT = 0
+START
+BLOCK LOOP_START
+SET VARIABLE COUNT = (COUNT) + 1
+SET FREQUENCY C4
+WAIT 5000
+SET FREQUENCY A4
+WAIT 5000
+STOP`;
+
+//TODO: Add Conditional commands/blocks
+//IF COUNT > 3 THEN STOP ELSE GOTO LOOP_START
 
 export class App {
     private readonly _toneGenerator: ToneGenerator;
@@ -39,7 +51,7 @@ export class App {
         this._scriptExecutor = new ScriptExecutor();
         this._scriptParser = new ScriptParser(this._toneGenerator, this._scriptExecutor);
 
-        const actions = this._scriptParser.parse(testLoopScript);
+        const actions = this._scriptParser.parse(testLoopWithVariablesScript);
 
         this._scriptExecutor.setActions(actions);
     }

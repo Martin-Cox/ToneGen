@@ -12,6 +12,9 @@ export class ScriptExecutor {
     @observable
     private _isExecuting: boolean = false;
 
+    @observable
+    private _variables: Record<string, any> = {};
+
     public constructor() {
         makeObservable(this);
     }
@@ -90,5 +93,14 @@ export class ScriptExecutor {
         const targetActionIndex = this.actions.indexOf(targetAction);
 
         this._currentActionIndex = targetActionIndex;
+    }
+
+    @action
+    public setVariable(variable: string, value: any): void {
+        this._variables[variable] = value;
+    }
+
+    public getVariable(variable: string): any {
+        return this._variables[variable];
     }
 }
