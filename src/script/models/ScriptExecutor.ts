@@ -1,5 +1,6 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { ScriptAction } from "./ScriptAction";
+import { delay } from "../../Utils";
 
 export class ScriptExecutor {
     @observable
@@ -39,6 +40,10 @@ export class ScriptExecutor {
         while (this._currentActionIndex < this._actions.length) {
             try {
                 await this.currentAction.execute();
+
+                //TEMP: Add artifical delay so it's easier to see the script executing
+                await delay(2000);
+
                 this._currentActionIndex++;
             } catch {
                 break;

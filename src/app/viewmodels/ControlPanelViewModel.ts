@@ -1,5 +1,6 @@
 import { computed, makeObservable } from "mobx";
 import { ScriptExecutor } from "../../script/models/ScriptExecutor";
+import { ScriptAction } from "../../script/models/ScriptAction";
 
 export class ControlPanelViewModel {
     private readonly _scriptExecutor: ScriptExecutor;
@@ -8,6 +9,8 @@ export class ControlPanelViewModel {
         makeObservable(this);
 
         this._scriptExecutor = scriptExecutor;
+
+        //TODO: Set up reaction to create the ScriptActionViewModels and expose those here.
     }
 
     @computed
@@ -16,13 +19,13 @@ export class ControlPanelViewModel {
     }
 
     @computed
-    public get scriptActionCommands(): string[] {
-        return this._scriptExecutor.actions.map((action) => action.command);
+    public get scriptActions(): ScriptAction[] {
+        return this._scriptExecutor.actions;
     }
 
     @computed
-    public get currentScriptActionCommand(): string {
-        return this._scriptExecutor.currentAction?.command || "";
+    public get currentScriptAction(): ScriptAction {
+        return this._scriptExecutor.currentAction;
     }
 
     public start(): void {

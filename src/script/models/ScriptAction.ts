@@ -1,14 +1,21 @@
-
+import { nanoid } from "nanoid";
 
 export abstract class ScriptAction {
     private readonly _command: string;
 
+    private readonly _id: string;
+
     public constructor(command: string) {
         this._command = command;
+        this._id = nanoid(8);
     }
 
     public get command(): string {
         return this._command;
+    }
+
+    public get id(): string {
+        return this._id;
     }
 
     public async execute(): Promise<void> {
