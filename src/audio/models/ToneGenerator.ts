@@ -3,65 +3,65 @@ import { NOTE_FREQUENCIES } from "../../Constants";
 
 
 export class ToneGenerator {
-    private static _audioContext: AudioContext;
+    private _audioContext: AudioContext;
 
-    private static _oscillator: OscillatorNode;
+    private _oscillator: OscillatorNode;
 
-    private static _gain: GainNode;
-
-    @observable
-    private static _isPlaying: boolean = true;
+    private _gain: GainNode;
 
     @observable
-    private static _frequency: number = NOTE_FREQUENCIES["C4"];
+    private _isPlaying: boolean = true;
+
+    @observable
+    private _frequency: number = NOTE_FREQUENCIES["C4"];
     
     public constructor() {
-        //makeObservable(this);
+        makeObservable(this);
 
-        ToneGenerator._audioContext = new AudioContext();
-        ToneGenerator._oscillator = ToneGenerator._audioContext.createOscillator();
-        ToneGenerator._gain = ToneGenerator._audioContext.createGain();
-        ToneGenerator._oscillator.type = "sine";
-        ToneGenerator._oscillator.frequency.value = ToneGenerator._frequency;
-        ToneGenerator._oscillator.connect(ToneGenerator._gain);
-        ToneGenerator._gain.connect(ToneGenerator._audioContext.destination);
-        ToneGenerator._oscillator.start();
-        ToneGenerator.stop();
+        this._audioContext = new AudioContext();
+        this._oscillator = this._audioContext.createOscillator();
+        this._gain = this._audioContext.createGain();
+        this._oscillator.type = "sine";
+        this._oscillator.frequency.value = this._frequency;
+        this._oscillator.connect(this._gain);
+        this._gain.connect(this._audioContext.destination);
+        this._oscillator.start();
+        this.stop();
     }
 
     @computed
-    public static get isPlaying(): boolean {
-        return ToneGenerator._isPlaying;
+    public get isPlaying(): boolean {
+        return this._isPlaying;
     }
 
     @computed
-    public static get frequency(): number {
-        return ToneGenerator._frequency;
+    public get frequency(): number {
+        return this._frequency;
     }
 
     @action
-    public static start(): void {
-        if (ToneGenerator._isPlaying) {
+    public start(): void {
+        if (this._isPlaying) {
             return;
         }
 
-        ToneGenerator._isPlaying = true;
-        ToneGenerator._audioContext.resume();
+        this._isPlaying = true;
+        this._audioContext.resume();
     }
 
     @action
-    public static stop(): void {
-        if (!ToneGenerator._isPlaying) {
+    public stop(): void {
+        if (!this._isPlaying) {
             return;
         }
 
-        ToneGenerator._isPlaying = false;
-        ToneGenerator._audioContext.suspend();
+        this._isPlaying = false;
+        this._audioContext.suspend();
     }
 
     @action
-    public static setFrequency(frequency: number): void {
-        ToneGenerator._frequency = frequency;
-        ToneGenerator._oscillator.frequency.value = frequency;
+    public setFrequency(frequency: number): void {
+        this._frequency = frequency;
+        this._oscillator.frequency.value = frequency;
     }
 }

@@ -8,19 +8,21 @@ import { StopScriptAction } from "../../script/models/StopScriptAction";
 
 
 export class App {
+    private readonly _toneGenerator: ToneGenerator;
+
     private readonly _scriptExecutor: ScriptExecutor;
 
     public constructor() {
-        new ToneGenerator();
+        this._toneGenerator = new ToneGenerator();
 
         // For demonstration purposes
         this._scriptExecutor = new ScriptExecutor();
-        this._scriptExecutor.addAction(new SetFrequencyScriptAction("SET FREQUENCY C4", NOTE_FREQUENCIES["C4"]));
-        this._scriptExecutor.addAction(new StartScriptAction("START"));
-        this._scriptExecutor.addAction(new WaitScriptAction("WAIT 5000", 5000));
-        this._scriptExecutor.addAction(new SetFrequencyScriptAction("SET FREQUENCY A4", NOTE_FREQUENCIES["A4"]));
-        this._scriptExecutor.addAction(new WaitScriptAction("WAIT 5000", 5000));
-        this._scriptExecutor.addAction(new StopScriptAction("STOP"));
+        this._scriptExecutor.addAction(new SetFrequencyScriptAction(this._toneGenerator, "SET FREQUENCY C4", NOTE_FREQUENCIES["C4"]));
+        this._scriptExecutor.addAction(new StartScriptAction(this._toneGenerator, "START"));
+        this._scriptExecutor.addAction(new WaitScriptAction(this._toneGenerator, "WAIT 5000", 5000));
+        this._scriptExecutor.addAction(new SetFrequencyScriptAction(this._toneGenerator, "SET FREQUENCY A4", NOTE_FREQUENCIES["A4"]));
+        this._scriptExecutor.addAction(new WaitScriptAction(this._toneGenerator, "WAIT 5000", 5000));
+        this._scriptExecutor.addAction(new StopScriptAction(this._toneGenerator, "STOP"));
     }
 
     public get scriptExecutor(): ScriptExecutor {
