@@ -1,12 +1,6 @@
 import { ToneGenerator } from "../../audio/models/ToneGenerator";
 import { ScriptExecutor } from "../..//script/models/ScriptExecutor";
-import { StartScriptAction } from "../../script/models/StartScriptAction";
-import { WaitScriptAction } from "../../script/models/WaitScriptAction";
-import { SetFrequencyScriptAction } from "../../script/models/SetFrequencyScriptAction";
-import { NOTE_FREQUENCIES } from "../../Constants";
-import { StopScriptAction } from "../../script/models/StopScriptAction";
 import { ScriptParser } from "../../script/models/ScriptParser";
-
 
 const testScript = `SET FREQUENCY C4
 START
@@ -34,10 +28,11 @@ SET FREQUENCY C4
 WAIT 5000
 SET FREQUENCY A4
 WAIT 5000
+IF (COUNT) > 2 THEN GOTO LOOP_END ELSE GOTO LOOP_START
+BLOCK LOOP_END
+SET FREQUENCY D3
+WAIT 2000
 STOP`;
-
-//TODO: Add Conditional commands/blocks
-//IF COUNT > 3 THEN STOP ELSE GOTO LOOP_START
 
 export class App {
     private readonly _toneGenerator: ToneGenerator;
