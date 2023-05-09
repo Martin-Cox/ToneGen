@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, runInAction } from "mobx";
 import { ScriptAction } from "./ScriptAction";
 import { delay } from "../../Utils";
 
@@ -44,14 +44,16 @@ export class ScriptExecutor {
                 //TEMP: Add artifical delay so it's easier to see the script executing
                 await delay(2000);
 
-                this._currentActionIndex++;
+                runInAction(() => this._currentActionIndex++);                
             } catch {
                 break;
             }
         }
 
-        this._isExecuting = false;
-        this._currentActionIndex = 0;
+        runInAction(() => {
+            this._isExecuting = false;
+            this._currentActionIndex = 0;
+        });
 
         console.info("End executing script");
     }

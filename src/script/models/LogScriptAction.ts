@@ -1,3 +1,4 @@
+import { delay } from "../../Utils";
 import { ScriptAction } from "./ScriptAction";
 
 /** A simple script action that logs to the console and waits for 2 seconds. */
@@ -10,10 +11,9 @@ export class LogScriptAction extends ScriptAction {
         this._message = message;
     }
 
-    protected _performAction(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            console.log(this._message);
-            setTimeout(() => resolve(), 2000);
-        })
+    protected async _performAction(): Promise<void> {
+        console.log(this._message);
+
+        await delay(2000);
     }
 }

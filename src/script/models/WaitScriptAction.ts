@@ -1,3 +1,4 @@
+import { delay } from "../../Utils";
 import { ScriptAction } from "./ScriptAction";
 
 export class WaitScriptAction extends ScriptAction {
@@ -9,9 +10,7 @@ export class WaitScriptAction extends ScriptAction {
         this._delay = delay;
     }
 
-    protected _performAction(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => resolve(), this._delay);
-        })
+    protected async _performAction(): Promise<void> {
+        await delay(this._delay);
     }
 }

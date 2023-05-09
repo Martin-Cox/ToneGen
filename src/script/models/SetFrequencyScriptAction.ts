@@ -10,10 +10,7 @@ export class SetFrequencyScriptAction extends ScriptAction {
         this._frequency = frequency;
     }
 
-    protected _performAction(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            ToneGenerator.setFrequency(this._frequency);
-            resolve();
-        })
+    protected async _performAction(): Promise<void> {
+        ToneGenerator.setFrequency(this._frequency);
     }
 }

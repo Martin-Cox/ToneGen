@@ -18,6 +18,10 @@ export abstract class ScriptAction {
         return this._id;
     }
 
+    public get isValid(): boolean {
+        return true;
+    }
+
     public async execute(): Promise<void> {
         console.info(`Executing action: ${this._command}`);
 
