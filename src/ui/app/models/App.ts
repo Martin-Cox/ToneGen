@@ -1,6 +1,6 @@
-import { ToneGenerator } from "../../audio/models/ToneGenerator";
-import { ScriptExecutor } from "../..//script/models/ScriptExecutor";
-import { ScriptParser } from "../../script/models/ScriptParser";
+import { ToneGenerator } from "../../../engine/audio/ToneGenerator";
+import { ScriptExecutor } from "../../../engine/script/ScriptExecutor";
+import { ScriptParser } from "../../../engine/script/ScriptParser";
 
 const testScript = `SET FREQUENCY C4
 START

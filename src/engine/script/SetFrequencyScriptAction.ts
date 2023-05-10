@@ -1,4 +1,4 @@
-import { ToneGenerator } from "../../audio/models/ToneGenerator";
+import { ToneGenerator } from "../../audio/ToneGenerator";
 import { ScriptAction } from "./ScriptAction";
 
 export class SetFrequencyScriptAction extends ScriptAction {

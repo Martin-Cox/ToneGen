@@ -1,7 +1,7 @@
-import { ToneGenerator } from "../../audio/models/ToneGenerator";
+import { ToneGenerator } from "../../audio/ToneGenerator";
 import { ScriptAction } from "./ScriptAction";
 
-export class StartScriptAction extends ScriptAction {
+export class StopScriptAction extends ScriptAction {
     private readonly _toneGenerator: ToneGenerator;
 
     public constructor(command: string, toneGenerator: ToneGenerator) {
@@ -9,8 +9,8 @@ export class StartScriptAction extends ScriptAction {
 
         this._toneGenerator = toneGenerator;
     }
-
+    
     protected async _performAction(): Promise<void> {
-        this._toneGenerator.start();
+        this._toneGenerator.stop();
     }
 }

@@ -1,2 +1,2 @@
 import './index.css';
-import './app/components/App';
+import './ui/app/components/App';

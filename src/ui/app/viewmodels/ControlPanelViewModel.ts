@@ -1,6 +1,6 @@
 import { computed, makeObservable } from "mobx";
-import { ScriptExecutor } from "../../script/models/ScriptExecutor";
-import { ScriptAction } from "../../script/models/ScriptAction";
+import { ScriptExecutor } from "../../engine/script/models/ScriptExecutor";
+import { ScriptAction } from "../../engine/script/models/ScriptAction";
 
 export class ControlPanelViewModel {
     private readonly _scriptExecutor: ScriptExecutor;

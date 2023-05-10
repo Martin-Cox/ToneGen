@@ -5,7 +5,7 @@
 //for each line in the script, execute each regex against it, if we find a match - call the corresponding constructor
 
 import { parseFrequency } from "../../Utils";
-import { ToneGenerator } from "../../audio/models/ToneGenerator";
+import { ToneGenerator } from "../../audio/ToneGenerator";
 import { BlockScriptAction } from "./BlockScriptAction";
 import { ConditionalScriptAction } from "./ConditionalScriptAction";
 import { ErrorScriptAction } from "./ErrorScriptAction";
