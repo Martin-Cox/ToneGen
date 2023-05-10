@@ -53,10 +53,7 @@ export class ScriptExecutor {
             }
         }
 
-        runInAction(() => {
-            this._isExecuting = false;
-            this._currentActionIndex = 0;
-        });
+        this._resetState();
 
         console.info("End executing script");
     }
@@ -102,5 +99,12 @@ export class ScriptExecutor {
 
     public getVariable(variable: string): any {
         return this._variables[variable];
+    }
+
+    @action
+    private _resetState(): void {
+        this._isExecuting = false;
+        this._currentActionIndex = 0;
+        this._variables = {};
     }
 }
