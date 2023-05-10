@@ -8,13 +8,11 @@ type ControlPanelProps = {
 }
 
 export const ControlPanel: React.FunctionComponent<ControlPanelProps> = observer(({ model }) => {
-    const startButton = <button onClick={() => model.start()}>Start</button>;
-    const executingButton = <button disabled>Executing script</button>;
     const allCommands = model.scriptActions.map((action) => <p key={action.id}>{action.command}</p>);
 
     return (
         <div className='control-panel'>
-            {model.isExecuting ? executingButton : startButton}
+            <button disabled={model.isExecuting} onClick={() => model.start()}>{model.isExecuting ? "Executing script" : "Start"}</button>
             <p>{model.currentScriptAction ? `Current command: ${model.currentScriptAction.command}` : "No command"}</p>
             <br />
             {allCommands}
